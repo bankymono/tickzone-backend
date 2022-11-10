@@ -1,8 +1,7 @@
-package com.bankymono.tickzonebackend.entity;
+package com.bankymono.tickzonebackend.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -10,10 +9,10 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @Getter
 @Setter
-@RequiredArgsConstructor
 @Entity
 @Table(name="users")
 public class User extends BaseEntity{
@@ -47,5 +46,9 @@ public class User extends BaseEntity{
     @Size(min = 5,message = "Password must be at least 5 characters long")
     @Column(name = "password", nullable = false)
     private String password;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Event> events;
 
 }

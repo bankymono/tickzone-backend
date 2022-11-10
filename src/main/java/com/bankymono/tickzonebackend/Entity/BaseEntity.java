@@ -1,4 +1,4 @@
-package com.bankymono.tickzonebackend.entity;
+package com.bankymono.tickzonebackend.Entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.annotation.CreatedBy;
@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public class BaseEntity {
+
     @CreatedDate
     @Column(updatable = false)
     @JsonIgnore

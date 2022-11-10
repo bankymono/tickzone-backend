@@ -1,4 +1,4 @@
-package com.bankymono.tickzonebackend.security;
+package com.bankymono.tickzonebackend.Security;
 
 public class SecurityConstants {
     public static final String SECRET_KEY = "bQeThWmZq4t7w!z$C&F)J@NcRfUjXn2r5u8x/A?D*G-KaPdSgVkYp3s6v9y$B&E)"; //Your secret should always be strong (uppercase, lowercase, numbers, symbols) so that nobody can potentially decode the signature.
