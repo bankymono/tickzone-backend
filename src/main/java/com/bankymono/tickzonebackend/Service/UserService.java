@@ -16,7 +16,6 @@ import java.util.Optional;
 @AllArgsConstructor
 public class UserService {
 
-
     private UserRepository userRepository;
 
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -49,6 +48,7 @@ public class UserService {
         Optional<User> user = userRepository.findByEmail(userEmail);
 
         return user.get().getEvents();
+
     }
 
     public void deleteUser(int id) throws UserExistsException{

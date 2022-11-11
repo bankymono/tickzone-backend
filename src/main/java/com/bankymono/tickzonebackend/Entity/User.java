@@ -2,6 +2,7 @@ package com.bankymono.tickzonebackend.Entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -14,8 +15,10 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
+@RequiredArgsConstructor
 @Table(name="users")
 public class User extends BaseEntity{
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
@@ -48,7 +51,7 @@ public class User extends BaseEntity{
     private String password;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, targetEntity = Event.class)
     private List<Event> events;
 
 }

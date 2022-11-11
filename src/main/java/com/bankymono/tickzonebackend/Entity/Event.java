@@ -2,6 +2,7 @@ package com.bankymono.tickzonebackend.Entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -14,6 +15,7 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name="event")
+@RequiredArgsConstructor
 public class Event extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
@@ -25,7 +27,6 @@ public class Event extends BaseEntity{
     @Column(name = "event_name")
     private String eventName;
 
-    @NotBlank(message = "Cannot be blank")
     @Column(name = "event_date")
     private LocalDateTime eventDate;
 
@@ -37,7 +38,7 @@ public class Event extends BaseEntity{
     @Column(name = "event_description")
     private String eventDescription;
 
-    @Column(name = "published")
+    @Column(name = "publish")
     private Boolean publish = false;
 
     @Column(name = "image_url")
@@ -48,7 +49,6 @@ public class Event extends BaseEntity{
     User user;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
-    private List<Event> tickets;
-
+    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL,targetEntity = Ticket.class)
+    private List<Ticket> tickets;
 }

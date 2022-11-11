@@ -68,14 +68,13 @@ public class TicketService {
         return true;
     }
 
-    public Ticket buyTicket(int ticketId, Boolean purchase) {
+    public Ticket buyTicket(int ticketId) {
         Optional<Ticket> ticket = ticketRepository.findById(ticketId);
         if(ticket.isPresent()) {
             ticket.get().setPurchased(true);
             return ticketRepository.save(ticket.get());
         }else
             throw new EntityNotFoundException(ticketId, Ticket.class);
-
     }
 
 }

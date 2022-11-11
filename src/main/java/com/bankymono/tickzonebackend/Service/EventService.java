@@ -25,17 +25,28 @@ public class EventService {
         return (List<Event>) eventRepository.findAll();
     }
 
-    public List<Event> getPublishEvents(Boolean publish){
-        return (List<Event>) eventRepository.findByPublish(publish);
+    public List<Event> getPublishEvents(){
+        return (List<Event>) eventRepository.findByPublish(true);
+    }
+
+    public Event getEvent(int eventId) {
+        Optional<Event> event = eventRepository.findById(eventId);
+
+        if(event.isPresent()){
+            return event.get();
+        }else
+            throw new EntityNotFoundException(event.get().getId(), User.class);
     }
 
     public Event saveEvent(String email, Event event) {
+
         Optional<User> user = userRepository.findByEmail(email);
         if(user.isPresent()){
-            event.setUser(user.get());
+           event.setUser(user.get());
         }else {
             throw new UserNotFoundException(email);
         }
+
         return eventRepository.save(event);
     }
 
@@ -49,19 +60,19 @@ public class EventService {
         }
     }
 
-    public Event publishEvent(int eventId, Boolean publish) {
+    public Event publishEvent(int eventId) {
+        System.out.println("mo ti de be");
         Optional<Event> event = eventRepository.findById(eventId);
         if(event.isPresent()){
-            event.get().setPublish(publish);
+            event.get().setPublish(true);
             return eventRepository.save(event.get());
         }else {
             throw new EntityNotFoundException(eventId,Event.class);
         }
     }
 
-    public  List<Event> getEventTickets(int eventId) {
-        Optional<Event> event  = eventRepository.findById(eventId);
-
-        return event.get().getTickets();
+    public  List<Ticket> getEventTickets(int eventId) {
+        Event event  = getEvent(eventId);
+        return event.getTickets();
     }
 }
