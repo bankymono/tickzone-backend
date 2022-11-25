@@ -13,23 +13,20 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
-@RestController
+
+@CrossOrigin(origins = "*")
 @RequestMapping("/user")
 @AllArgsConstructor
+@RestController
 public class UserController {
 
     private UserService userService;
 
-    @GetMapping("/all")
-    public ResponseEntity<List<User>> findAll() {
-        return new ResponseEntity<>(userService.getUsers(), HttpStatus.OK);
-    }
-
     @PostMapping("/register")
     public ResponseEntity<User> createUser(@Valid @RequestBody User user) {
-
         return new ResponseEntity<>(userService.saveUser(user), HttpStatus.CREATED);
     }
+
 
     @GetMapping("/events")
     public ResponseEntity<List<Event>> getUserEvents(Authentication authentication) {
@@ -43,5 +40,10 @@ public class UserController {
         System.out.println(authentication.getName() + "I am name");
         userService.deleteUser(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<User>> findAll() {
+        return new ResponseEntity<>(userService.getUsers(), HttpStatus.OK);
     }
 }

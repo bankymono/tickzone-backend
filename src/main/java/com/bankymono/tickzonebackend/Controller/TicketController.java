@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/ticket")
 @AllArgsConstructor
@@ -29,15 +30,21 @@ public class TicketController {
         return new ResponseEntity<>(ticketService.getTicket(ticketId), HttpStatus.OK);
     }
 
-    @PostMapping()
-    public ResponseEntity<Boolean> createTickets( @RequestParam("eventId") int eventId, @RequestBody BatchTickets tickets) {
+    @PostMapping("/create/{eventId}")
+    public ResponseEntity<Boolean> createTickets( @PathVariable int eventId, @RequestBody BatchTickets tickets) {
+        System.out.println(eventId + ", " + tickets.toString() + " heee");
         return new ResponseEntity<>(ticketService.createTickets(eventId, tickets),
                 HttpStatus.CREATED);
     }
 
     @PutMapping("/{ticketId}/buy")
-    public ResponseEntity<Ticket> buyTicket(@PathVariable("ticketId") int ticketId){
+    public ResponseEntity<Ticket> buyTicket(@PathVariable int ticketId){
         return new ResponseEntity<>(ticketService.buyTicket(ticketId), HttpStatus.OK);
+    }
+
+    @GetMapping("/{eventId}/available")
+    public ResponseEntity<List<Ticket>> getAvailableTickets(@PathVariable int eventId){
+        return  new ResponseEntity<>(ticketService.getAvailableTickets(eventId), HttpStatus.OK);
     }
 
 }

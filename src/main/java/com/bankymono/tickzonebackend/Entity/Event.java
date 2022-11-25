@@ -36,12 +36,14 @@ public class Event extends BaseEntity{
 
     @NotBlank(message = "Cannot be blank")
     @Column(name = "event_description")
+    @Lob
     private String eventDescription;
 
     @Column(name = "publish")
     private Boolean publish = false;
 
     @Column(name = "image_url")
+    @Lob
     private String imageUrl;
 
     @ManyToOne(optional = false)

@@ -66,6 +66,13 @@
 			<scope>test</scope>
 		</dependency>
 
+
+		<dependency>
+			<groupId>com.microsoft.sqlserver</groupId>
+			<artifactId>mssql-jdbc</artifactId>
+			<version>11.2.0.jre11</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>

@@ -26,6 +26,7 @@ public class TicketService {
 
 
     public List<Ticket> getAllTickets() {
+
         return (List<Ticket>) ticketRepository.findAll();
     }
 
@@ -51,8 +52,6 @@ public class TicketService {
     public Boolean createTickets( int eventId, BatchTickets tickets) {
         ArrayList<Ticket> eventTickets = new ArrayList<>();
         Event theEvent =  eventRepository.findById(eventId).get();
-
-
         for(int i = 0; i < tickets.getNoOfTickets(); ++i){
             Ticket newTicket = new Ticket();
             newTicket.setTicketName(tickets.getName());
@@ -63,7 +62,6 @@ public class TicketService {
 
             eventTickets.add(newTicket);
         }
-
         ticketRepository.saveAll(eventTickets);
         return true;
     }
@@ -75,6 +73,14 @@ public class TicketService {
             return ticketRepository.save(ticket.get());
         }else
             throw new EntityNotFoundException(ticketId, Ticket.class);
+    }
+
+    public List<Ticket> getAvailableTickets(int eventId){
+        Optional<Event> event = eventRepository.findById(eventId);
+        if(event.isPresent()){
+            return ticketRepository.findByEventAndPurchased(event.get(),false);
+        }else
+            throw new EntityNotFoundException(eventId,Event.class);
     }
 
 }

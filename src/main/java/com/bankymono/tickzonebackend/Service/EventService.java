@@ -22,6 +22,7 @@ public class EventService {
 
 
     public List<Event> getAllEvents() {
+
         return (List<Event>) eventRepository.findAll();
     }
 
@@ -36,6 +37,23 @@ public class EventService {
             return event.get();
         }else
             throw new EntityNotFoundException(event.get().getId(), User.class);
+    }
+
+    public Event updateEvent(int eventId, Event event) {
+        Optional<Event> newEvent = eventRepository.findById(eventId);
+        if(newEvent.isPresent()){
+            return eventRepository.save(event);
+        }else
+            throw new EntityNotFoundException(newEvent.get().getId(), Event.class);
+    }
+
+    public void deleteEvent(int eventId) {
+        Optional<Event> event = eventRepository.findById(eventId);
+
+        if(event.isPresent()){
+           eventRepository.deleteById(eventId);
+        }else
+            throw new EntityNotFoundException(event.get().getId(), Event.class);
     }
 
     public Event saveEvent(String email, Event event) {
@@ -61,7 +79,7 @@ public class EventService {
     }
 
     public Event publishEvent(int eventId) {
-        System.out.println("mo ti de be");
+
         Optional<Event> event = eventRepository.findById(eventId);
         if(event.isPresent()){
             event.get().setPublish(true);
